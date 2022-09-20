@@ -42,6 +42,9 @@ export default class Images {
         uTexture: {
           value: null,
         },
+        uTime: {
+          value: 0,
+        },
       },
       vertexShader: imageVertex,
       fragmentShader: imageFragment,
