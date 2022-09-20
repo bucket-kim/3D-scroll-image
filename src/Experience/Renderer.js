@@ -17,7 +17,7 @@ export default class Renderer {
       canvas: this.canvas,
       antialias: true,
     });
-    this.renderer.setClearColor("#211d20");
+    this.renderer.setClearColor("#ffffff");
     this.renderer.physicallyCorrectLights = true;
     this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.renderer.toneMapping = THREE.CineonToneMapping;

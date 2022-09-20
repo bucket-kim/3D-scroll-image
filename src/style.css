@@ -1,9 +1,9 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
 }
 
-html,
+html, */
 body {
   overflow: hidden;
 }
@@ -20,7 +20,7 @@ body {
   width: 200px;
   top: 100px;
   height: 10px;
-  background: #fff;
+  background: #000;
 }
 
 .n1 {

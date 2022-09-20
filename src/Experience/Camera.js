@@ -21,13 +21,15 @@ export default class Camera {
       1000
     );
 
-    this.camera.position.set(6, 4, 8);
+    this.camera.position.set(0, 0, 4);
     this.scene.add(this.camera);
   }
 
   setOrbitControl() {
     this.controls = new OrbitControls(this.camera, this.canvas);
     this.controls.enableDamping = true;
+    // this.controls.enabled = false;
+    this.controls.zoomSpeed = 0.15;
   }
 
   resize() {

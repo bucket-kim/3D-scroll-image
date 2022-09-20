@@ -8,7 +8,7 @@ export default class World {
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
 
-    this.images = new Images();
+    // this.images = new Images();
 
     // test mesh
     const testMesh = new THREE.Mesh(
@@ -20,6 +20,7 @@ export default class World {
 
     this.resources.on("ready", () => {
       // setup
+      this.images = new Images();
     });
   }
 
