@@ -9,6 +9,7 @@ export default class Images {
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
     this.sizes = this.experience.sizes;
+    this.time = this.experience.time;
 
     this.speed = 0;
     this.position = 0;
@@ -17,7 +18,9 @@ export default class Images {
     this.wrap = document.getElementById("wrap");
 
     this.elems = [...document.querySelectorAll(".n")];
-    // this.images = [...document.querySelectorAll("img")];
+
+    this.materials = [];
+    this.meshes = [];
 
     window.addEventListener("wheel", (e) => {
       // console.log(e);
@@ -33,7 +36,7 @@ export default class Images {
     this.images = Object.values(this.resources.items);
 
     this.plane = {};
-    this.plane.geometry = new THREE.PlaneGeometry(1, 1, 10, 10);
+
     this.plane.material = new THREE.ShaderMaterial({
       extensions: {
         derivatives: "#extension GL_OES_standard_derivaties: enable",
@@ -50,17 +53,21 @@ export default class Images {
       fragmentShader: imageFragment,
       side: THREE.DoubleSide,
     });
-    // this.scene.add(this.plane.mesh);
 
     this.images.forEach((img, i) => {
       this.mat = this.plane.material.clone();
+      this.materials.push(this.mat);
+
       this.mat.uniforms.uTexture.value = img;
       this.mat.uniforms.uTexture.value.needsUpdate = true;
 
-      let mesh = new THREE.Mesh(this.plane.geometry, this.mat);
+      this.geo = new THREE.PlaneGeometry(1, 1, 10, 10);
+
+      let mesh = new THREE.Mesh(this.geo, this.mat);
       mesh.position.y = i * 1.2;
 
       this.scene.add(mesh);
+      this.meshes.push(mesh);
     });
   }
 
@@ -71,10 +78,19 @@ export default class Images {
       obj.dist = Math.min(Math.abs(this.position - i), 1);
       obj.dist = 1 - obj.dist ** 2;
       this.elems[i].style.transform = `scale(${1 + 0.4 * obj.dist})`;
+
+      let scale = 1 + 0.25 * obj.dist;
+
+      this.meshes[i].position.y = i * 1.2 - this.position * 1.2;
+      this.meshes[i].scale.set(scale, scale, scale);
     });
     this.rounded = Math.round(this.position);
     let diff = this.rounded - this.position;
     this.position += Math.sign(diff) * Math.pow(Math.abs(diff), 0.7) * 0.025;
     this.wrap.style.transform = `translate(0, ${-this.position * 100 + 50}px)`;
+
+    this.materials.forEach((material) => {
+      material.uniforms.uTime.value = this.time.elapsed * 0.001;
+    });
   }
 }

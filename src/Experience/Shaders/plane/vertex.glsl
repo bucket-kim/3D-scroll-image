@@ -7,9 +7,11 @@ void main() {
 
   vec3 pos = position;
 
-  pos.y += sin(uTime) * 0.02;
+  pos.y += sin(uTime * 0.5) * 0.05;
 
-  vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+  vUv.y -= sin(uTime * 0.5) * 10.;
+
+  vec4 modelPosition = modelMatrix * vec4(pos, 1.0);
   vec4 viewPosition = viewMatrix * modelPosition;
   vec4 projectedPosition = projectionMatrix * viewPosition;
 
