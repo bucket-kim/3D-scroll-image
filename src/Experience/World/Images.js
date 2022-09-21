@@ -48,10 +48,14 @@ export default class Images {
         uTime: {
           value: 0,
         },
+        distFromCenter: {
+          value: 0,
+        },
       },
       vertexShader: imageVertex,
       fragmentShader: imageFragment,
       side: THREE.DoubleSide,
+      transparent: true,
     });
 
     this.images.forEach((img, i) => {
@@ -61,7 +65,7 @@ export default class Images {
       this.mat.uniforms.uTexture.value = img;
       this.mat.uniforms.uTexture.value.needsUpdate = true;
 
-      this.geo = new THREE.PlaneGeometry(1, 1, 10, 10);
+      this.geo = new THREE.PlaneGeometry(1, 1, 20, 20);
 
       let mesh = new THREE.Mesh(this.geo, this.mat);
       mesh.position.y = i * 1.2;
@@ -83,6 +87,7 @@ export default class Images {
 
       this.meshes[i].position.y = i * 1.2 - this.position * 1.2;
       this.meshes[i].scale.set(scale, scale, scale);
+      this.meshes[i].material.uniforms.distFromCenter.value = obj.dist;
     });
     this.rounded = Math.round(this.position);
     let diff = this.rounded - this.position;
